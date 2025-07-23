@@ -152,7 +152,8 @@ export async function getProfile(
 
   const { value } = res;
   const { errors } = value;
-  if (errors != null && errors.length > 0) {
+  // Only return errors if there are no valid result
+  if ((!value.data || !value.data.user || !value.data.user.result) && errors != null && errors.length > 0) {
     return {
       success: false,
       err: new Error(errors[0].message),
